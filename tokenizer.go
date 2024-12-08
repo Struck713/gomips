@@ -47,7 +47,7 @@ func Tokenize(lines []string) []Token {
 				tokens = append(tokens, NewToken(string(line[start:x]), y, x))
 				start = x + 1
 				break
-			case ',', ':', '\n':
+			case ',', ':', '\n', '(', ')':
 				if start < x {
 					tokens = append(tokens, NewToken(line[start:x], y, start))
 				}

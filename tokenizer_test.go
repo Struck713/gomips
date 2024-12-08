@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestTokenize1(t *testing.T) {
+func TestTokenizeLine(t *testing.T) {
 
 	lines := []string{
 		"beq $s2, 3, terminate\n",
@@ -24,7 +24,7 @@ func TestTokenize1(t *testing.T) {
 
 }
 
-func TestTokenize2(t *testing.T) {
+func TestTokenizeLines(t *testing.T) {
 
 	lines := []string{
 		"beq $s2, 3, terminate\n",
@@ -48,6 +48,34 @@ func TestTokenize2(t *testing.T) {
 	isCorrectToken(t, tokens[9], ",")
 	isCorrectToken(t, tokens[10], "enterF")
 	isCorrectToken(t, tokens[11], "\n")
+
+}
+
+func TestTokenizeString(t *testing.T) {
+
+	lines := []string{
+		"sw $0, 0($6)\n",
+		"label: .asciiz \"This is a test string\"\n",
+	}
+
+	tokens := Tokenize(lines)
+	if len(tokens) != 13 {
+		t.Fatalf(`len(tokens) = %d, want 14`, len(tokens))
+	}
+
+	isCorrectToken(t, tokens[0], "sw")
+	isCorrectToken(t, tokens[1], "$0")
+	isCorrectToken(t, tokens[2], ",")
+	isCorrectToken(t, tokens[3], "0")
+	isCorrectToken(t, tokens[4], "(")
+	isCorrectToken(t, tokens[5], "$6")
+	isCorrectToken(t, tokens[6], ")")
+	isCorrectToken(t, tokens[7], "\n")
+	isCorrectToken(t, tokens[8], "label")
+	isCorrectToken(t, tokens[9], ":")
+	isCorrectToken(t, tokens[10], ".asciiz")
+	isCorrectToken(t, tokens[11], "This is a test string")
+	isCorrectToken(t, tokens[12], "\n")
 
 }
 
