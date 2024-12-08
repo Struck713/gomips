@@ -12,7 +12,11 @@ type Token struct {
 }
 
 func (t Token) Print() string {
-	return fmt.Sprintf("%d:%d %s", t.Line, t.Column, t.Token)
+	token := t.Token
+	if token == "\n" {
+		token = "\\n"
+	}
+	return fmt.Sprintf("%d:%d %s", t.Line, t.Column, token)
 }
 
 func NewToken(token string, line int, column int) Token {
