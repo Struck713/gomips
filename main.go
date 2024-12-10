@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+
+	"nstruck.dev/gomips/assembler"
 )
 
 func main() {
@@ -13,10 +15,11 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
 		text := scanner.Text() + "\n"
-		for _, token := range Tokenize([]string{text}) {
-			fmt.Printf("[%s] ", token.Print())
-		}
-		fmt.Println()
+
+		tokens := assembler.Tokenize([]string{text})
+		ast := assembler.Parse(tokens)
+		fmt.Println(ast)
+
 		fmt.Printf("# ")
 	}
 

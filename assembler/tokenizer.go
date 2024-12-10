@@ -1,4 +1,4 @@
-package main
+package assembler
 
 import (
 	"fmt"
@@ -11,12 +11,12 @@ type Token struct {
 	Column int
 }
 
-func (t Token) Print() string {
+func (t Token) Print() {
 	token := t.Token
 	if token == "\n" {
 		token = "\\n"
 	}
-	return fmt.Sprintf("%d:%d %s", t.Line, t.Column, token)
+	fmt.Printf("%d:%d %s\n", t.Line, t.Column, token)
 }
 
 func NewToken(token string, line int, column int) Token {
